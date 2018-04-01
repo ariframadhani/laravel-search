@@ -1,7 +1,7 @@
 # Laravel Search
 
 ## Description 
-Search class app without installing vendors and providers. This search app will itegerated with your Eloquent Models. Please check the usage section for more details.
+Search class app without installing vendors and providers. This search app will integerated with your Eloquent Models. Please check the usage section for more details.
 
 ## How To Use
 1. Clone the ```Search.php ``` file
@@ -63,7 +63,7 @@ Search class app without installing vendors and providers. This search app will 
   class Item extends Model
   {
       ...
-      public function supplyer() // this function name right here will be called on the relation variable
+      public function supplyer() // this method name will be called on the relation array with a string variable
       {
           return $this->belongsTo(Supplyer::class);
       }
@@ -74,7 +74,6 @@ Search class app without installing vendors and providers. This search app will 
 3. Then define what column you want to search on relation columns.
 ```php 
   $relation = [
-    // the relation function
     'supplyer' => ['name', 'info']
   ];
 ```
