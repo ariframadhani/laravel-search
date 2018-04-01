@@ -4,9 +4,7 @@
 
 Search class app without installing vendors and providers. This search app will integerated to your Eloquent Models. Please check the usage section for more details.
 
-## Version : 1.5
-
-What's new: 
+## What's new
 1. Add "with" method for relationship column
 2. Now you can use simple code to get the result of the search
 2. The "on" method has been removed, changed to "with" method (for relationship)
