@@ -44,7 +44,7 @@ Search class app without installing vendors and providers. This search app will 
   }
 ```
 
-## Optional
+## Relationship Model
 1. If you want to search with relationship, you can just define what relation model you want to search.
 
 2. You must have the relationship model first (Ex: Supplyer) on your model (Ex: Item)
