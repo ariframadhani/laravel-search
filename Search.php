@@ -27,9 +27,26 @@ class Search
      */
     protected $result;
 
+    /**
+     * $original = the model's columns
+     * 
+     * @var array 
+     */
+    protected $original;
+
+    /**
+     * $relation = the model's relationships
+     * 
+     * @var array 
+     */
+    protected $relation;
+
     public function __construct($model)
     {
         $this->model = $model;
+        
+        $data = $this->model->first();
+        $this->original = array_keys($data->getOriginal());
     }
 
     public static function throwExceptionRelation()
@@ -37,66 +54,53 @@ class Search
         throw new Exception("Relationship's column must be a multidimensional array.");
         
         # [ relation_model => [ column1, column2, ... , columnX ]]
-
     }
 
     public function find($query)
     {
         $this->query = $query;
+        
         return $this;
     }
 
-    public function on($arrayKey = [], $keyRelation = [])
+    public function with(array $keyRelation)
+    {
+        $this->relation = $keyRelation;
+     
+        return $this;
+    }
+
+    public function result()
     {
         $query = $this->query;
-        $arrayKey = is_array($arrayKey) ? $arrayKey : self::throwExceptionBaseColumn(); 
+        $arrayKey = $this->original;
+        $keyRelation = is_array($this->relation) ? $this->relation : [];
         
         $search = $this->model->orWhere(function($m) use($arrayKey, $keyRelation, $query) {
             foreach ($arrayKey as $key) {
                 $m->orWhere($key,'like','%'.$query.'%');
-                try{
-                    foreach($keyRelation as $key => $value){
-                        try{
-                            foreach($value as $column){
-                                $m->orWhereHas($key, function($rel) use($query, $column){
-                                    $rel->where($column, 'like', '%'.$query.'%');
-                                });
-                            }
-                        }catch(Exception $e){
-                            self::throwExceptionRelationColumn();
+                foreach($keyRelation as $key => $value){
+                    try{
+                        foreach($value as $column){
+                            $m->orWhereHas($key, function($rel) use($query, $column){
+                                $rel->where($column, 'like', '%'.$query.'%');
+                            });
                         }
+                    }catch(Exception $e){
+                        self::throwExceptionRelationColumn();
                     }
-                }catch(Exception $e){
-                    self::throwExceptionRelation();
                 }
             }
         });
 
         $this->result = $search;
-        return $this;
-    }
 
-    /**
-     * build the search result (required)
-     * @return Model Builder
-     * 
-     */
-    public function result()
-    {   
         return $this->result;
-    }
-
-    public static function throwExceptionBaseColumn()
-    {
-        throw new Exception("Base column should be an array.");
-        
-        # [ column1, column2, ... , columnX ]
-    
     }
 
     public static function throwExceptionRelationColumn()
     {
-        throw new Exception("Relationship's column is not set.");
+        throw new Exception("Relationship's columns are not set.");
 
         # got:
         # [ relation_model => [ NOTSET, NOTSET, ... , NOTSET ]] 
