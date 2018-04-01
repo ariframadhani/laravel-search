@@ -1,7 +1,7 @@
 # Laravel Search
 
 ## Description 
-Search class app without installing vendors and providers. This search app will itegerated with your Eloquent Models. Please check the usage section for more details.
+Search class app without installing vendors and providers. This search app will integerated with your Eloquent Models. Please check the usage section for more details.
 
 ## How To Use
 1. Clone the ```Search.php ``` file
