@@ -1,2 +1,3 @@
-# laravel-search
-Laravel search without providers
+# Laravel Search
+** Description ** 
+Laravel search without installing vendor and providers.
