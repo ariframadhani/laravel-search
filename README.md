@@ -2,7 +2,7 @@
 
 ## Description 
 
-Search class app without installing vendors and providers. This search app will integerated with your Eloquent Models. Please check the usage section for more details.
+Search class app without installing vendors and providers. This search app will integerated to your Eloquent Models. Please check the usage section for more details.
 
 ## Version : 2.0 
 
@@ -75,7 +75,7 @@ What's new:
   ];
 ```
 
-4. Then, you can add the ```relation``` on the 'on' methods of the search class.
+4. Then, you can add the ```$relation``` variable to the 'with' methods.
 ```php
    $search->find($query)
           ->with($relation)
@@ -116,4 +116,4 @@ What's new:
 ```
 ** and many more eloquent methods **
 
-#### Coded: Arif Ramadhani 2018
+#### Coded © Arif Ramadhani
