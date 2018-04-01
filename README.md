@@ -1,10 +1,10 @@
 # Laravel Search
 
 ## Description 
-Search class app without installing vendor and providers. This search app was itegerated with your Eloquent Models. Please check the usage section for more details.
+Search class app without installing vendors and providers. This search app will itegerated with your Eloquent Models. Please check the usage section for more details.
 
 ## How To Use
-1. Clone the ```Search.php ``` (App File)
+1. Clone the ```Search.php ``` file
 
 2. Put the Search App file to your own app folder (Model folder)
 
@@ -86,5 +86,42 @@ Search class app without installing vendor and providers. This search app was it
           ->result() 
           ->get();
 ```
+
+## Collaborate with Eloquent methods
+
+##### Get all the result
+```php
+   $search->find($query)
+          ->on($column, $relation)
+          ->result() 
+          ->get();
+```
+
+##### Get all the result with pagination
+```php
+   $search->find($query)
+          ->on($column, $relation)
+          ->result() 
+          ->paginate(5);
+```
+
+##### Get all the result with trashed items 
+```php
+   $search->find($query)
+          ->on($column, $relation)
+          ->result()
+          ->withTrashed()
+          ->get(); // you can also use the paginate method
+```
+
+##### Get all the result only trashed items 
+```php
+   $search->find($query)
+          ->on($column, $relation)
+          ->result()
+          ->onlyTrashed()
+          ->get();
+```
+** and many more eloquent methods **
 
 ##
