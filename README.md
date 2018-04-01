@@ -1,6 +1,14 @@
 # Laravel Search
 
+## Version : 2.0 
+
+What's new: 
+1. Add "with" method for relationship column
+2. Now you can use simple code to get the result of the search
+2. The "on" method has been removed, changed to "with" method (for relationship)
+
 ## Description 
+
 Search class app without installing vendors and providers. This search app will integerated with your Eloquent Models. Please check the usage section for more details.
 
 ## How To Use
@@ -108,4 +116,4 @@ Search class app without installing vendors and providers. This search app will 
 ```
 ** and many more eloquent methods **
 
-##
+#### Coded: Arif Ramadhani 2018
