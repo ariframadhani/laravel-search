@@ -63,7 +63,7 @@ Search class app without installing vendors and providers. This search app will 
   class Item extends Model
   {
       ...
-      public function supplyer() // this method name will be called on the relation with string variable
+      public function supplyer() // this method name will be called on the relation array with a string variable
       {
           return $this->belongsTo(Supplyer::class);
       }
