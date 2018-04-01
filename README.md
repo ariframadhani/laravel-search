@@ -1,7 +1,13 @@
 # Laravel Search
 
 ## Description 
-Search class app without installing vendors and providers. This search app will integerated with your Eloquent Models. Please check the usage section for more details.
+
+Search class app without installing vendors and providers. This search app will integerated to your Eloquent Models. Please check the usage section for more details.
+
+## What's new
+1. Add "with" method for relationship column
+2. Now you can use simple code to get the result of the search
+2. The "on" method has been removed, changed to "with" method (for relationship)
 
 ## How To Use
 1. Clone the ```Search.php ``` file
@@ -25,30 +31,17 @@ Search class app without installing vendors and providers. This search app will 
       {
         $item = new Item 
         $search = new Search($item)
-
-        // define column you want to search here
-        // search methods here
+            
+        // search methods
+        $result = $search->find($query)
+                         ->result()
+                         ->get();
+        
+        return $result // return the search result from item's model
       }
 
       ...
   }
-```
-5.  You need to define what columns you want to search
-
-```php
-   $column = [
-      'id', 'code', 'name', 'info', 'stok', 'expired_in',
-   ];
-```
-
-6. After that you can go on with the search mothods
-```php
-
-   $query = 'item name' //query for searching
-   $search->find($query)
-          ->on($column)
-          ->result() // result method is requeired. After that it will return the model methods
-          ->get(); // model method
 ```
 
 ## Optional
@@ -71,17 +64,19 @@ Search class app without installing vendors and providers. This search app will 
   }
 ```
 
-3. Then define what column you want to search on relation columns.
+3. Then, define what column you want to search on relation columns.
 ```php 
   $relation = [
     'supplyer' => ['name', 'info']
+    
+    // this 'supplyer' name was caled from item's model below
   ];
 ```
 
-4. Then you can add the ```relation``` on the 'on' methods of the search class.
+4. Then, you can add the ```$relation``` variable to the 'with' methods.
 ```php
    $search->find($query)
-          ->on($column, $relation)
+          ->with($relation)
           ->result() 
           ->get();
 ```
@@ -91,32 +86,28 @@ Search class app without installing vendors and providers. This search app will 
 ##### Get all the result
 ```php
    $search->find($query)
-          ->on($column, $relation)
           ->result() 
           ->get();
 ```
 
-##### Get all the result with pagination
+##### Get all the search result with pagination
 ```php
    $search->find($query)
-          ->on($column, $relation)
           ->result() 
           ->paginate(5);
 ```
 
-##### Get all the result with trashed items 
+##### Get all the search result from 'withTrashed' method
 ```php
    $search->find($query)
-          ->on($column, $relation)
           ->result()
           ->withTrashed()
           ->get(); // you can also use the paginate method
 ```
 
-##### Get all the result only trashed items 
+##### Get all the search result from 'onlyTrashed' method 
 ```php
    $search->find($query)
-          ->on($column, $relation)
           ->result()
           ->onlyTrashed()
           ->get();
@@ -124,3 +115,5 @@ Search class app without installing vendors and providers. This search app will 
 ** and many more eloquent methods **
 
 ##
+
+#### Coded © Arif Ramadhani
