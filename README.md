@@ -63,7 +63,7 @@ Search class app without installing vendors and providers. This search app will 
   class Item extends Model
   {
       ...
-      public function supplyer() // this function name right here will be called on the relation variable
+      public function supplyer() // this method name will be called on the relation with string variable
       {
           return $this->belongsTo(Supplyer::class);
       }
@@ -74,7 +74,6 @@ Search class app without installing vendors and providers. This search app will 
 3. Then define what column you want to search on relation columns.
 ```php 
   $relation = [
-    // the relation function
     'supplyer' => ['name', 'info']
   ];
 ```
