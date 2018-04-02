@@ -45,8 +45,7 @@ class Search
     {
         $this->model = $model;
         
-        $data = $this->model->first();
-        $this->original = array_keys($data->getOriginal());
+        $this->start();
     }
 
     public static function throwExceptionRelation()
@@ -56,10 +55,22 @@ class Search
         # [ relation_model => [ column1, column2, ... , columnX ]]
     }
 
+    /**
+     * get model columns
+     * 
+     * @return void
+     */
+    public function start()
+    {
+        $model = $this->model;
+
+        $this->original = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
+    }
+
     public function find($query)
     {
         $this->query = $query;
-        
+                                           
         return $this;
     }
 
@@ -70,6 +81,11 @@ class Search
         return $this;
     }
 
+    /**
+     * main app
+     * 
+     * @return result 
+     */
     public function result()
     {
         $query = $this->query;
