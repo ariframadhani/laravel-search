@@ -21,8 +21,7 @@ Search class app without installing vendors and providers. This search app will 
   
   class ItemController extends Controller {
       ...    
-
-      // Example route: " /item/search&query={query} "
+      
       public function search($query)
       {
         $item = new Item 
