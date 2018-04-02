@@ -69,7 +69,7 @@ Search class app without installing vendors and providers. This search app will 
   $relation = [
     'supplyer' => ['name', 'info']
     
-    // this 'supplyer' name was caled from item's model below
+    // this 'supplyer' name was caled from item's model above
   ];
 ```
 
