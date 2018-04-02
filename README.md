@@ -10,11 +10,11 @@ Search class app without installing vendors and providers. This search app will 
 2. The "on" method has been removed, changed to "with" method (for relationship)
 
 ## How To Use
-1. Clone the ```Search.php ``` file
+1. Clone the ```Search.php ``` file or you can download file from assets version.
 
-2. Put the Search App file to your own app folder (Model folder)
+2. Put the ```Search.php``` file to your own app folder (Model folder)
 
-3. Call the Search App on your controller file.
+3. Call the Search App file on your controller file.
     ```use App\Search ```
     
 4. Instance the search class with a construct of your model that you want to search (Ex: Item)
@@ -69,7 +69,7 @@ Search class app without installing vendors and providers. This search app will 
   $relation = [
     'supplyer' => ['name', 'info']
     
-    // this 'supplyer' name was caled from item's model below
+    // this 'supplyer' name was caled from item's model above
   ];
 ```
 
