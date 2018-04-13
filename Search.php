@@ -7,66 +7,74 @@ use Exception;
 class Search
 {
     /**
-     * $model = the model you want to search
+     * db eloquent model
      * 
      * @var object
      */
     protected $model;
 
     /**
-     * $query = the search query
+     * query search
      * 
      * @var string
      */
     protected $query;
 
     /**
-     * $search = the result of searching
-     *
-     * @var object model builder
-     */
-    protected $result;
-
-    /**
-     * $original = the model's columns
+     * model's columns
      * 
      * @var array 
      */
     protected $original;
 
     /**
-     * $relation = the model's relationships
+     * model's relationships
      * 
      * @var array 
      */
     protected $relation;
 
+    /**
+     * searching result
+     *
+     * @var object model builder
+     */
+    protected $result;
+
     public function __construct($model)
     {
         $this->model = $model;
         
-        $this->start();
-    }
-
-    public static function throwExceptionRelation()
-    {
-        throw new Exception("Relationship's column must be a multidimensional array.");
-        
-        # [ relation_model => [ column1, column2, ... , columnX ]]
+        $this->boot();
     }
 
     /**
-     * get model columns
+     * get all model columns
      * 
      * @return void
      */
-    public function start()
+    private function boot()
     {
         $model = $this->model;
 
         $this->original = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
     }
 
+    /**
+     * Query search is required
+     * 
+     */
+    private function throwQuerySetter()
+    {
+        if(!isset($this->query))
+            throw new Exception('Query search is not set. Use find method to set the query search');
+    }
+
+    /**
+     * setter for query
+     * 
+     * @return self
+     */
     public function find($query)
     {
         $this->query = $query;
@@ -74,6 +82,11 @@ class Search
         return $this;
     }
 
+    /**
+     *  use this to search with relation key
+     * 
+     *  @return self
+     */
     public function with(array $keyRelation)
     {
         $this->relation = $keyRelation;
@@ -82,18 +95,36 @@ class Search
     }
 
     /**
-     * main app
+     * if you want to custom what key to search 
+     * use this method
      * 
-     * @return result 
+     * @return self
+     */
+    public function custom($onKey = [])
+    {
+        $onKey = is_array($onKey) ? $onKey : func_get_args();
+        
+        $this->original = $onKey;
+
+        return $this;
+    }
+
+    /**
+     * main search
+     * 
+     * @return self result 
      */
     public function result()
     {
+        self::throwQuerySetter();
+
         $query = $this->query;
-        $arrayKey = $this->original;
+        $column = $this->original;
+
         $keyRelation = is_array($this->relation) ? $this->relation : [];
         
-        $search = $this->model->orWhere(function($m) use($arrayKey, $keyRelation, $query) {
-            foreach ($arrayKey as $key) {
+        $search = $this->model->orWhere(function($m) use($column, $keyRelation, $query) {
+            foreach ($column as $key) {
                 $m->orWhere($key,'like','%'.$query.'%');
                 foreach($keyRelation as $key => $value){
                     try{
@@ -114,16 +145,12 @@ class Search
         return $this->result;
     }
 
-    public static function throwExceptionRelationColumn()
+    
+    private function throwExceptionRelationColumn()
     {
         throw new Exception("Relationship's columns are not set.");
 
-        # got:
-        # [ relation_model => [ NOTSET, NOTSET, ... , NOTSET ]] 
-
-        # it should be like this:
-        # [ relation_model => [ column1, column2, ... , columnX ]]
-    
+        # [ relation_model => [ column1, column2, ... , columnX ]] 
     }
 
 }
